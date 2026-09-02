@@ -1,0 +1,56 @@
+# Configuration for prek hooks (see https://prek.j178.dev/).
+# Eventually, the hooks described here will be run as tests before merging each PR.
+default_language_version:
+  python: python3.13
+
+repos:
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.12.3
+    hooks:
+      - id: uv-lock
+
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.5
+    hooks:
+      - id: ruff-check
+      - id: ruff-format
+
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.3
+    hooks:
+      - id: codespell
+
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v2.3.1
+    hooks:
+      - id: mypy
+        pass_filenames: false
+        args: [--config-file=./pyproject.toml, src]
+        additional_dependencies: [ flask ]
+
+
+  - repo: https://github.com/facebook/pyrefly-pre-commit
+    rev: 1.2.0
+    hooks:
+      - id: pyrefly-check
+        pass_filenames: false
+        additional_dependencies: [ flask ]
+
+
+  - repo: https://github.com/tox-dev/pyproject-fmt
+    rev: "v2.29.3"
+    hooks:
+      - id: pyproject-fmt
+
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-case-conflict
+      - id: check-added-large-files
+        exclude: ^(.*\/dummy.*|.*\.json)$
+        args: [ "--maxkb=1500", "--enforce-all" ]
+      - id: check-merge-conflict
