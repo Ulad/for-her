@@ -39,10 +39,11 @@ wheels = [
 
 [[package]]
 name = "for-her"
-version = "0.1.0"
+version = "1.0.0"
 source = { virtual = "." }
 dependencies = [
     { name = "flask" },
+    { name = "python-dateutil" },
 ]
 
 [package.optional-dependencies]
@@ -54,6 +55,7 @@ dev = [
 requires-dist = [
     { name = "flask", specifier = "==3.1.3" },
     { name = "prek", marker = "extra == 'dev'", specifier = "==0.5.1" },
+    { name = "python-dateutil", specifier = "==2.9.0.post0" },
 ]
 provides-extras = ["dev"]
 
@@ -122,6 +124,27 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/f1/de/0d5c1c20e26bfc866885aed4ca68222c1fb8d7ddd8639a789ba0be8ba57e/prek-0.5.1-py3-none-musllinux_1_1_x86_64.whl", hash = "sha256:c6481f5effbb1a83a578bf769a527e1192d0faf4f2e481733917e1fff2007253", size = 6317963 },
     { url = "https://files.pythonhosted.org/packages/cb/21/56b31d445ac84607919679841b47288d42687925cdf9a31207db277d753d/prek-0.5.1-py3-none-win_amd64.whl", hash = "sha256:74609c3cd3f1c14d35d081905f58b266133b9532df53a75648a280e6a80febb3", size = 5726528 },
     { url = "https://files.pythonhosted.org/packages/d4/95/ada15ee42ef72b7d422ae3e3fbc4753d4bc6634ba23de1b7cec84b407df7/prek-0.5.1-py3-none-win_arm64.whl", hash = "sha256:f408364fc7f10996f396a14542d8a3e35494a4fde2b1cb873d996715d1876322", size = 5490020 },
+]
+
+[[package]]
+name = "python-dateutil"
+version = "2.9.0.post0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "six" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/66/c0/0c8b6ad9f17a802ee498c46e004a0eb49bc148f2fd230864601a86dcf6db/python-dateutil-2.9.0.post0.tar.gz", hash = "sha256:37dd54208da7e1cd875388217d5e00ebd4179249f90fb72437e91a35459a0ad3", size = 342432 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ec/57/56b9bcc3c9c6a792fcbaf139543cee77261f3651ca9da0c93f5c1221264b/python_dateutil-2.9.0.post0-py2.py3-none-any.whl", hash = "sha256:a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427", size = 229892 },
+]
+
+[[package]]
+name = "six"
+version = "1.17.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz", hash = "sha256:ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81", size = 34031 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl", hash = "sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274", size = 11050 },
 ]
 
 [[package]]
