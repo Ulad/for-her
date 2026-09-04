@@ -2,16 +2,18 @@
 
 A simple responsive Flask + uv website where your girlfriend can choose a date.
 
+![Screenshot placeholder](screenshots/landing.png)
+
 ## Prerequisites
 Before you begin, ensure you have the following installed on your system:
-- **python 3.13** ([Download here](https://www.python.org/downloads/))
-- **uv** ([Installation guide](https://github.com/astral-sh/uv#installation))
-- **git** to clone the repository
+- [**python 3.13**](https://www.python.org/downloads/)
+- [**uv**](https://github.com/astral-sh/uv#installation)
+- [**git**](https://git-scm.com/install/)
 
 ## How to run
 1. Clone the repo.
 ```
-git clone ...
+git clone https://github.com/Ulad/for-her.git
 cd for-her
 ```
 2. Navigate to the source directory, all application code lives inside `src/`.
