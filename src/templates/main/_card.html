@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block body %}
+  <main class="card{% block main_class %}{% endblock %}">
+    <p class="to">For {{ to_name }}</p>
+    {% block card_content %}{% endblock %}
+    <p class="from">— {{ from_name }}</p>
+  </main>
+{% endblock %}

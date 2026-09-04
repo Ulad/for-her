@@ -1,18 +1,11 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>See you then, {{ to_name }}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-  <main class="card confirmation">
-    <p class="to">For {{ to_name }}</p>
-    <h1>It's a date.</h1>
-    <p class="reply">{{ reply }}</p>
-    <p class="message">She'll see you then.</p>
-    <p class="from">— {{ from_name }}</p>
-  </main>
-</body>
-</html>
+{% extends "main/_card.html" %}
+
+{% block title %}See you then, {{ to_name }}{% endblock %}
+
+{% block main_class %} confirmation{% endblock %}
+
+{% block card_content %}
+  <h1>It's a date.</h1>
+  <p class="reply">{{ reply }}</p>
+  <p class="message">She'll see you then.</p>
+{% endblock %}
