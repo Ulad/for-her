@@ -12,8 +12,6 @@ app = Flask(__name__)
 TO_NAME = "Anna"
 FROM_NAME = "Vlad"
 INVITE_MESSAGE = "I've been meaning to ask you out properly. Pick a day that works, then what you're in the mood for."
-MIN_DATE = datetime.now(tz=UTC).date().isoformat()
-MAX_DATE = (datetime.now(tz=UTC).date() + relativedelta(months=1)).isoformat()
 ACTIVITIES = [
     {"id": "dinner", "label": "Dinner"},
     {"id": "walk", "label": "Afternoon walk"},
@@ -23,19 +21,6 @@ ACTIVITIES = [
 ]
 
 
-@app.route("/")
-def index() -> str:
-    return render_template(
-        "main/index.html",
-        to_name=TO_NAME,
-        from_name=FROM_NAME,
-        message=INVITE_MESSAGE,
-        activities=ACTIVITIES,
-        min_date=MIN_DATE,
-        max_date=MAX_DATE,
-    )
-
-
 def confirmation_message(chosen_date: str, activity_label: str, note: str) -> str:
     d = date.fromisoformat(chosen_date)
     pretty_date = f"{d.strftime('%A, %B')} {d.day}"
@@ -43,6 +28,26 @@ def confirmation_message(chosen_date: str, activity_label: str, note: str) -> st
     if note:
         base += f" Note: \u201c{note}\u201d"
     return base
+
+
+def date_bounds() -> tuple[date, date]:
+    """Compute min/max allowed dates fresh on every call, so they never go stale."""
+    today = datetime.now(tz=UTC).date()
+    return today, today + relativedelta(months=1)
+
+
+@app.route("/")
+def index() -> str:
+    min_date, max_date = date_bounds()
+    return render_template(
+        "main/index.html",
+        to_name=TO_NAME,
+        from_name=FROM_NAME,
+        message=INVITE_MESSAGE,
+        activities=ACTIVITIES,
+        min_date=min_date.isoformat(),
+        max_date=max_date.isoformat(),
+    )
 
 
 @app.post("/choose")
