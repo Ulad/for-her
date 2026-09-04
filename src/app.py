@@ -65,7 +65,7 @@ def choose() -> str:
 
 @app.route("/favicon.ico")
 def favicon() -> Response:
-    return app.send_static_file("favicon.ico")
+    return app.send_static_file("img/favicon.ico")
 
 
 if __name__ == "__main__":
