@@ -2,7 +2,7 @@
 
 A simple responsive Flask + uv website where your girlfriend can choose a date.
 
-![Screenshot placeholder](screenshots/landing.png)
+![website_view](screenshots/landing.png)
 
 ## Prerequisites
 Before you begin, ensure you have the following installed on your system:
