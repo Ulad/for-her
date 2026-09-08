@@ -1,50 +1,41 @@
 {% extends "main/_card.html" %}
-
 {% block title %}A question for {{ to_name }}{% endblock %}
-
 {% block card_content %}
-  <h1>What are you free for?</h1>
-  <p class="message">{{ message }}</p>
-
-  <form method="post" action="{{ url_for('choose') }}">
-    {% if error %}
-      <p class="error">{{ error }}</p>
-    {% endif %}
-
-    <label class="date-field">
-      <span>Pick a day</span>
-      <input
-        type="date"
-        name="date"
-        min="{{ min_date }}"
-        {% if max_date %}max="{{ max_date }}"{% endif %}
-        required
-      >
-    </label>
-
-    <fieldset class="activities">
-      <legend>Pick an activity</legend>
-      <div class="activity-grid">
-        {% for activity in activities %}
-        <span class="activity">
-          <input
-            type="radio"
-            name="activity"
-            id="{{ activity.id }}"
-            value="{{ activity.id }}"
-            required
-          >
-          <label for="{{ activity.id }}">{{ activity.label }}</label>
-        </span>
-        {% endfor %}
-      </div>
-    </fieldset>
-
-    <label class="note-field">
-      <span>Anything you want to add? (optional)</span>
-      <textarea name="note" placeholder="e.g. can we do it a bit earlier?"></textarea>
-    </label>
-
-    <button type="submit">I'm in</button>
-  </form>
+    <h1>What are you free for?</h1>
+    <p class="message">{{ message }}</p>
+    <form method="post" action="{{ url_for("choose") }}">
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        <label class="date-field">
+            <span>Pick a day</span>
+            <input type="date"
+                   name="date"
+                   min="{{ min_date }}"
+                   {% if max_date %}max="{{ max_date }}"{% endif %}
+                   required>
+        </label>
+        <fieldset class="activities">
+            <legend>Pick an activity</legend>
+            <div class="activity-grid">
+                {% for activity in activities %}
+                    <span class="activity">
+                        <input type="radio"
+                               name="activity"
+                               id="{{ activity.id }}"
+                               value="{{ activity.id }}"
+                               required>
+                        <label for="{{ activity.id }}">{{ activity.label }}</label>
+                    </span>
+                {% endfor %}
+            </div>
+        </fieldset>
+        <label class="note-field">
+            <span>Anything you want to add? (optional)</span>
+            <textarea name="note"
+                      maxlength="500"
+                      placeholder="e.g. can we do it a bit earlier?"></textarea>
+        </label>
+        <button type="submit">I'm in</button>
+    </form>
 {% endblock %}

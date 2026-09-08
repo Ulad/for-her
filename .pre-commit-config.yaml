@@ -54,3 +54,10 @@ repos:
         exclude: ^(.*\/dummy.*|.*\.json)$
         args: [ "--maxkb=1500", "--enforce-all" ]
       - id: check-merge-conflict
+
+
+  - repo: https://github.com/djlint/djLint
+    rev: v1.45.2
+    hooks:
+      - id: djlint-reformat
+      - id: djlint
