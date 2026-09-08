@@ -3,6 +3,9 @@ from datetime import UTC, date, datetime
 from dateutil.relativedelta import relativedelta
 from flask import Flask, Response, render_template, request
 
+from src.log import get_logger
+
+log = get_logger(__name__)
 app = Flask(__name__)
 
 # ─────────────────────────────────────────────────────────────
@@ -34,6 +37,15 @@ def date_bounds() -> tuple[date, date]:
     """Compute min/max allowed dates fresh on every call, so they never go stale."""
     today = datetime.now(tz=UTC).date()
     return today, today + relativedelta(months=1)
+
+
+@app.before_request
+def log_request_info() -> None:
+    if request.method == "POST":
+        if request.is_json:
+            log.info("JSON body: %s", request.get_json())
+        else:
+            log.info("Form data: %s", dict(request.form))
 
 
 @app.route("/")

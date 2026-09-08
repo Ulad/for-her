@@ -62,4 +62,5 @@ no_implicit_reexport = true
 show_error_codes = true
 
 [tool.pyrefly]
+search-path = [ "src", "." ]
 preset = "strict"
