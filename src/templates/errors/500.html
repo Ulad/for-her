@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Something went wrong{% endblock %}
+{% block body %}
+    <main class="card">
+        <h1>Something went wrong.</h1>
+        <p class="message">Not your fault. Try the invitation again in a moment.</p>
+        <p class="from">
+            <a href="{{ url_for("index") }}">Back to the start</a>
+        </p>
+    </main>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}This page isn't here{% endblock %}
+{% block body %}
+    <main class="card">
+        <h1>This page isn't here.</h1>
+        <p class="message">The invitation is still waiting on the first page.</p>
+        <p class="from">
+            <a href="{{ url_for("index") }}">Take me there</a>
+        </p>
+    </main>
+{% endblock %}

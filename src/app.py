@@ -1,12 +1,16 @@
 from datetime import UTC, date, datetime
 
 from dateutil.relativedelta import relativedelta
-from flask import Flask, Response, render_template, request
+from flask import Flask, render_template, request
 
+from src.handlers.errors import register_error
+from src.handlers.misc import register_misc
 from src.log import get_logger
 
 log = get_logger(__name__)
 app = Flask(__name__)
+register_misc(app)
+register_error(app)
 
 # ─────────────────────────────────────────────────────────────
 # CONFIG — edit everything in this section, nothing else needed.
@@ -39,15 +43,6 @@ def date_bounds() -> tuple[date, date]:
     return today, today + relativedelta(months=1)
 
 
-@app.before_request
-def log_request_info() -> None:
-    if request.method == "POST":
-        if request.is_json:
-            log.info("JSON body: %s", request.get_json())
-        else:
-            log.info("Form data: %s", dict(request.form))
-
-
 @app.route("/")
 def index() -> str:
     min_date, max_date = date_bounds()
@@ -78,11 +73,6 @@ def choose() -> str:
         from_name=FROM_NAME,
         reply=reply,
     )
-
-
-@app.route("/favicon.ico")
-def favicon() -> Response:
-    return app.send_static_file("img/favicon.ico")
 
 
 if __name__ == "__main__":
