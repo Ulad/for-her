@@ -17,15 +17,22 @@ for-her/
 ├── src/
 │   ├── app.py                 # Flask app, routes, invite config
 │   ├── log.py                 # logging setup
+│   ├── notifications/
+│   │   └── email.py           # gmail notifications
+│   ├── handlers/
+│   │   ├── errors.py          # routes for errors (404, 500)
+│   │   └── misc.py            # non-business logic routes
 │   ├── static/
 │   │   └── css/
 │   │       └── style.css
 │   └── templates/
 │       ├── base.html          # page shell
+│       ├── errors/            # templates for error pages
 │       └── main/
 │           ├── _card.html     # shared card layout
 │           ├── index.html     # date + activity form
 │           └── confirmation.html
+├── .env.example               # config for the app. You should create your own `.env` file
 ├── pyproject.toml             # project metadata and tools
 ├── uv.lock
 ├── .pre-commit-config.yaml
@@ -38,12 +45,14 @@ for-her/
 1. Clone the repo.
 ```bash
 git clone https://github.com/Ulad/for-her.git
+cd for-her
 ```
-2. Navigate to the source directory, all application code lives inside `src/`.
+2. Create `.env` file in the root dir with your credentials like in the `.env.example`.
+3. Navigate to the source directory, all application code lives inside `src/`.
 ```bash
-cd for-her/src
+cd src
 ```
-3. Run the Flask development server via `uv`. This guarantees your app uses the right environment.
+4. Run the Flask development server via `uv`. This guarantees your app uses the right environment.
 ```bash
 uv run flask run
 ```
