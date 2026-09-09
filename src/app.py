@@ -6,6 +6,7 @@ from flask import Flask, render_template, request
 from src.handlers.errors import register_error
 from src.handlers.misc import register_misc
 from src.log import get_logger
+from src.notifications.email import notify_choice
 
 log = get_logger(__name__)
 app = Flask(__name__)
@@ -66,6 +67,8 @@ def choose() -> str:
     activity = next(a for a in ACTIVITIES if a["id"] == activity_id)
 
     reply = confirmation_message(chosen_date, activity["label"], note)
+
+    notify_choice(reply)
 
     return render_template(
         "main/confirmation.html",
