@@ -48,11 +48,7 @@ git clone https://github.com/Ulad/for-her.git
 cd for-her
 ```
 2. Create `.env` file in the root dir with your credentials like in the `.env.example`.
-3. Navigate to the source directory, all application code lives inside `src/`.
-```bash
-cd src
-```
-4. Run the Flask development server via `uv`. This guarantees your app uses the right environment.
+3. Run the Flask development server via `uv`. This guarantees your app uses the right environment.
 ```bash
 uv run flask run
 ```
@@ -61,3 +57,6 @@ That's it! You can use:
 > - `--debug` to enable auto-reload on code changes
 > - `--port=5000` to change default port.
 > - `--host=0.0.0.0` to make the server publicly available
+
+### TODO
+- notifications for all errors (even uncaught)

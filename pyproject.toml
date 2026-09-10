@@ -60,6 +60,7 @@ table_format = "long"
 [tool.mypy]
 explicit_package_bases = true
 disallow_any_generics = false
+allow_redefinition = true
 strict = true
 plugins = [ "pydantic.mypy" ]
 no_implicit_reexport = true
