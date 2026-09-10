@@ -20,8 +20,8 @@ class Config(BaseSettings):
 
     model_config = SettingsConfigDict(env_file=BASE_DIR / ".env", env_file_encoding="utf-8")
 
-    GMAIL_USERNAME: EmailStr
-    GMAIL_PASSWORD: SecretStr
+    GMAIL_USERNAME: EmailStr | None = None
+    GMAIL_PASSWORD: SecretStr | None = None
 
 
 @lru_cache(maxsize=1)
