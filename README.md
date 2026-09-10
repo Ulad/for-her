@@ -15,10 +15,10 @@ Before you begin, ensure you have the following installed on your system:
 ```text
 for-her/
 ├── src/
-│   ├── app.py                 # Flask app, routes, invite config
+│   ├── __init__.py            # Flask app factory
+│   ├── app.py                 # main app and routes
 │   ├── log.py                 # logging setup
-│   ├── notifications/
-│   │   └── email.py           # gmail notifications
+│   │── mail.py                # mail notifications
 │   ├── handlers/
 │   │   ├── errors.py          # routes for errors (404, 500)
 │   │   └── misc.py            # non-business logic routes
