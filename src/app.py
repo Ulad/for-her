@@ -1,17 +1,14 @@
 from datetime import UTC, date, datetime
 
 from dateutil.relativedelta import relativedelta
-from flask import Flask, render_template, request
+from flask import render_template, request
 
-from src.handlers.errors import register_error
-from src.handlers.misc import register_misc
+from src import create_app
 from src.log import get_logger
-from src.notifications.email import notify_choice
+from src.mail import send_email
 
 log = get_logger(__name__)
-app = Flask(__name__)
-register_misc(app)
-register_error(app)
+app = create_app()
 
 # ─────────────────────────────────────────────────────────────
 # CONFIG — edit everything in this section, nothing else needed.
@@ -68,7 +65,7 @@ def choose() -> str:
 
     reply = confirmation_message(chosen_date, activity["label"], note)
 
-    notify_choice(reply)
+    send_email(subject="Date picked", text_body=reply)
 
     return render_template(
         "main/confirmation.html",

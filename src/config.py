@@ -9,7 +9,7 @@ Documentation: https://docs.pydantic.dev/latest/concepts/pydantic_settings/.
 from functools import lru_cache
 from pathlib import Path
 
-from pydantic import EmailStr, SecretStr
+from pydantic import EmailStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BASE_DIR = Path(__file__).parent.parent
@@ -20,8 +20,11 @@ class Config(BaseSettings):
 
     model_config = SettingsConfigDict(env_file=BASE_DIR / ".env", env_file_encoding="utf-8")
 
-    GMAIL_USERNAME: EmailStr | None = None
-    GMAIL_PASSWORD: SecretStr | None = None
+    MAIL_SERVER: str = "smtp.gmail.com"
+    MAIL_PORT: int = 587
+    MAIL_USERNAME: EmailStr | None = None
+    MAIL_PASSWORD: str | None = None
+    MAIL_USE_TLS: bool = True
 
 
 @lru_cache(maxsize=1)
