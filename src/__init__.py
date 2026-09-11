@@ -1,19 +1,23 @@
 from flask import Flask
-from flask_mail import Mail
 
-from src.config import Config, get_cfg
+from src.config import Config
+from src.extensions import cfg, email
 from src.handlers.errors import register_error
 from src.handlers.misc import register_misc
-
-email = Mail()
-cfg = get_cfg()
+from src.log import register_mail_logging, setup_logging
 
 
 def create_app(config_class: Config = cfg) -> Flask:
     app = Flask(__name__)
     app.config.from_object(config_class)
 
+    setup_logging()
+
     email.init_app(app)
+
+    if not app.debug:
+        register_mail_logging(app)
+
     register_misc(app)
     register_error(app)
 

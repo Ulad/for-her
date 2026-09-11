@@ -5,9 +5,16 @@ import sys
 from logging.config import dictConfig
 from typing import TYPE_CHECKING, ClassVar, override
 
+from flask import has_request_context, request
+
+from src.mail import send_email
+
 if TYPE_CHECKING:
-    from logging import Logger, LogRecord
+    from logging import LogRecord
     from types import TracebackType
+
+    from flask import Flask
+
 
 APP_LOGGER_NAME = "src"
 app_log = logging.getLogger(APP_LOGGER_NAME)
@@ -19,6 +26,9 @@ def handle_uncaught_exception(
     exc_value: BaseException,
     exc_traceback: TracebackType | None,
 ) -> None:
+    if issubclass(exc_type, KeyboardInterrupt):
+        sys.__excepthook__(exc_type, exc_value, exc_traceback)
+        return
     app_log.critical(
         "Uncaught exception, application will terminate.",
         exc_info=(exc_type, exc_value, exc_traceback),
@@ -83,15 +93,41 @@ def setup_logging(*, level: str | int = "INFO") -> None:
     )
 
 
-def get_logger(name: str | None = None) -> Logger:
-    """
-    Get a logger with the given name, ensuring logging is configured.
+class MailLogHandler(logging.Handler):
+    """Logging handler that emails error records using the app's async mail module."""
 
-    Call this in modules that need logging instead of configuring logging again.
-    """
-    setup_logging()
-    if name is None:
-        return logging.getLogger(APP_LOGGER_NAME)
-    if name == "__main__":
-        return logging.getLogger(f"{APP_LOGGER_NAME}.__main__")
-    return logging.getLogger(name)
+    def __init__(self, app: Flask, *, recipients: list[str | tuple[str, str]] | None) -> None:
+        super().__init__()
+        self.app = app
+        self.recipients = recipients
+
+    @override
+    def emit(self, record: LogRecord) -> None:
+        try:
+            body = self.format(record)
+            if has_request_context():
+                body += (
+                    f"\n\nRequest Info:"
+                    f"\nURL:        {request.url}"
+                    f"\nMethod:     {request.method}"
+                    f"\nIP:         {request.remote_addr}"
+                    f"\nUser-Agent: {request.headers.get('User-Agent')}"
+                )
+            with self.app.app_context():
+                send_email(
+                    subject=f"[{record.levelname}] {record.getMessage()[:80]}",
+                    text_body=body,
+                    recipients=self.recipients,
+                )
+        except Exception:  # noqa: BLE001
+            self.handleError(record)
+
+
+def register_mail_logging(
+    app: Flask, *, recipients: list[str | tuple[str, str]] | None = None, level: int = logging.ERROR
+) -> None:
+    """Attach a mail handler to the app logger."""
+    handler = MailLogHandler(app, recipients=recipients)
+    handler.setLevel(level)
+    handler.setFormatter(logging.Formatter(LOG_FORMAT, datefmt="%Y-%m-%dT%H:%M:%S%z"))
+    logging.getLogger(APP_LOGGER_NAME).addHandler(handler)

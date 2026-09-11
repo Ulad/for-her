@@ -1,13 +1,13 @@
 from datetime import UTC, date, datetime
+from logging import getLogger
 
 from dateutil.relativedelta import relativedelta
 from flask import render_template, request
 
 from src import create_app
-from src.log import get_logger
 from src.mail import send_email
 
-log = get_logger(__name__)
+log = getLogger(__name__)
 app = create_app()
 
 # ─────────────────────────────────────────────────────────────

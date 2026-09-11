@@ -1,13 +1,15 @@
+from concurrent.futures import ThreadPoolExecutor
+from logging import getLogger
 from smtplib import SMTPException
-from threading import Thread
 
 from flask import Flask, current_app
 from flask_mail import Message
 
-from src import cfg, email
-from src.log import get_logger
+from src.extensions import cfg, email
 
-log = get_logger(__name__)
+log = getLogger(__name__)
+
+_executor = ThreadPoolExecutor(max_workers=2, thread_name_prefix="email")
 
 
 def send_async_email(app: Flask, msg: Message) -> None:
@@ -29,4 +31,4 @@ def send_email(
     msg = Message(subject, sender=cfg.MAIL_USERNAME, recipients=recipients)
     msg.body = text_body
     msg.html = html_body
-    Thread(target=send_async_email, args=(current_app._get_current_object(), msg)).start()  # type: ignore[attr-defined]
+    _executor.submit(send_async_email, current_app._get_current_object(), msg)  # type: ignore[attr-defined]

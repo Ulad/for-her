@@ -1,8 +1,8 @@
+from logging import getLogger
+
 from flask import Flask, Response, request
 
-from src.log import get_logger
-
-log = get_logger(__name__)
+log = getLogger(__name__)
 
 
 def register_misc(app: Flask) -> None:
