@@ -27,6 +27,12 @@ ACTIVITIES = [
 
 
 def confirmation_message(chosen_date: str, activity_label: str, note: str) -> str:
+    """
+    Build a human-readable confirmation string.
+
+    >>> confirmation_message("2024-03-15", "Afternoon walk", "no rain please")
+    'Friday, March 15 it is — afternoon walk. Note: \u201cno rain please\u201d'
+    """
     d = date.fromisoformat(chosen_date)
     pretty_date = f"{d.strftime('%A, %B')} {d.day}"
     base = f"{pretty_date} it is — {activity_label.lower()}."

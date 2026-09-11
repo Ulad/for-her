@@ -35,9 +35,6 @@ def handle_uncaught_exception(
     )
 
 
-sys.excepthook = handle_uncaught_exception
-
-
 class ColoredFormatter(logging.Formatter):
     """Colored output formatter."""
 
@@ -59,6 +56,8 @@ class ColoredFormatter(logging.Formatter):
 
 def setup_logging(*, level: str | int = "INFO") -> None:
     """Set up logging."""
+    sys.excepthook = handle_uncaught_exception
+
     dictConfig(
         {
             "version": 1,
@@ -93,7 +92,7 @@ def setup_logging(*, level: str | int = "INFO") -> None:
     )
 
 
-class MailLogHandler(logging.Handler):
+class MailHandler(logging.Handler):
     """Logging handler that emails error records using the app's async mail module."""
 
     def __init__(self, app: Flask, *, recipients: list[str | tuple[str, str]] | None) -> None:
@@ -127,7 +126,7 @@ def register_mail_logging(
     app: Flask, *, recipients: list[str | tuple[str, str]] | None = None, level: int = logging.ERROR
 ) -> None:
     """Attach a mail handler to the app logger."""
-    handler = MailLogHandler(app, recipients=recipients)
+    handler = MailHandler(app, recipients=recipients)
     handler.setLevel(level)
     handler.setFormatter(logging.Formatter(LOG_FORMAT, datefmt="%Y-%m-%dT%H:%M:%S%z"))
     logging.getLogger(APP_LOGGER_NAME).addHandler(handler)

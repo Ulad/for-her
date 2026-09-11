@@ -1,13 +1,14 @@
 from flask import Flask
 
-from src.config import Config
-from src.extensions import cfg, email
+from src.config import Config, get_cfg
+from src.extensions import email
 from src.handlers.errors import register_error
 from src.handlers.misc import register_misc
 from src.log import register_mail_logging, setup_logging
 
 
-def create_app(config_class: Config = cfg) -> Flask:
+def create_app(config_class: Config | None = None) -> Flask:
+    config_class = config_class or get_cfg()
     app = Flask(__name__)
     app.config.from_object(config_class)
 

@@ -12,7 +12,10 @@ dependencies = [
 ]
 [project.optional-dependencies]
 dev = [
-    "prek==0.5.1",
+    "prek==0.5.2",
+    "pytest==9.1.1",
+    "pytest-randomly==5.0.0",
+    "pytest-timeout==2.5.0",
 ]
 
 [tool.ruff]
@@ -70,3 +73,9 @@ show_error_codes = true
 [tool.pyrefly]
 search-path = [ "src", "." ]
 preset = "strict"
+
+[tool.pytest]
+addopts = [ "--doctest-modules", "-ra" ]
+strict = true
+testpaths = [ "tests", "src" ]
+timeout = 5
