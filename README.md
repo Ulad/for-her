@@ -26,8 +26,9 @@ for-her/
 │   │   ├── errors.py          # routes for errors (404, 500)
 │   │   └── misc.py            # non-business logic routes
 │   ├── static/
-│   │   └── css/
-│   │       └── style.css
+│   │   ├── css/
+│   │   │   └── style.css
+│   │   └── img/
 │   └── templates/
 │       ├── base.html          # page shell
 │       ├── errors/            # templates for error pages
@@ -41,8 +42,8 @@ for-her/
 ├── .pre-commit-config.yaml
 ├── LICENSE
 ├── pyproject.toml             # project metadata and tools
-└── README.md
-├── uv.lock
+├── README.md
+└── uv.lock
 ```
 
 ## How to run
