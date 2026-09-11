@@ -17,9 +17,12 @@ for-her/
 ├── src/
 │   ├── __init__.py            # Flask app factory
 │   ├── app.py                 # main app and routes
+│   │── config.py              # main configuration
+│   │── extensions.py          # flask extensions
 │   ├── log.py                 # logging setup
 │   │── mail.py                # mail notifications
 │   ├── handlers/
+│   │   ├── __init__.py
 │   │   ├── errors.py          # routes for errors (404, 500)
 │   │   └── misc.py            # non-business logic routes
 │   ├── static/
@@ -33,12 +36,13 @@ for-her/
 │           ├── index.html     # date + activity form
 │           └── confirmation.html
 ├── .env.example               # config for the app. You should create your own `.env` file
-├── pyproject.toml             # project metadata and tools
-├── uv.lock
-├── .pre-commit-config.yaml
+├── .flaskenv                  # flask defaults 
 ├── .gitignore
+├── .pre-commit-config.yaml
 ├── LICENSE
+├── pyproject.toml             # project metadata and tools
 └── README.md
+├── uv.lock
 ```
 
 ## How to run
