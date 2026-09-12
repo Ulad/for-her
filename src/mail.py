@@ -27,10 +27,11 @@ def send_async_email(app: Flask, msg: Message) -> None:
 def send_email(
     *, subject: str, text_body: str, html_body: str | None = None, recipients: list[str | tuple[str, str]] | None = None
 ) -> None:
-    if recipients is None and current_app.config["MAIL_USERNAME"]:
-        recipients = [current_app.config["MAIL_USERNAME"]]
+    mail_username = current_app.config["MAIL_USERNAME"]
+    if recipients is None and mail_username:
+        recipients = [mail_username]
 
-    msg = Message(subject, sender=current_app.config["MAIL_USERNAME"], recipients=recipients)
+    msg = Message(subject, sender=mail_username, recipients=recipients)
     msg.body = text_body
     msg.html = html_body
     _executor.submit(send_async_email, current_app._get_current_object(), msg)  # type: ignore[attr-defined]

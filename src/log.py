@@ -112,12 +112,11 @@ class MailHandler(logging.Handler):
                     f"\nIP:         {request.remote_addr}"
                     f"\nUser-Agent: {request.headers.get('User-Agent')}"
                 )
-            with self.app.app_context():
-                send_email(
-                    subject=f"[{record.levelname}] {record.getMessage()[:80]}",
-                    text_body=body,
-                    recipients=self.recipients,
-                )
+            send_email(
+                subject=f"[{record.levelname}] {record.getMessage()[:80]}",
+                text_body=body,
+                recipients=self.recipients,
+            )
         except Exception:  # noqa: BLE001
             self.handleError(record)
 
